@@ -2,6 +2,7 @@ package com.nice.avishkar;
 
 import com.nice.avishkar.entities.Voters;
 import com.opencsv.bean.CsvToBeanBuilder;
+import com.sun.org.apache.bcel.internal.generic.ACONST_NULL;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -43,9 +44,13 @@ public class Main
 
 
 
+
+
         HashMap<String,Integer> voteCount = new HashMap<>();
 
         HashMap<String,Integer> voterCountRef = new HashMap<>();
+
+        HashMap<String,HashMap<String,Integer>> constituencyWithCandidatesData = new HashMap<>();
 
         for(Voters voters : votersList){
             //System.out.println(voters.getCandidate());
@@ -53,9 +58,10 @@ public class Main
         }
 
         for(Voters voters : votersList){
-            if(voterCountRef.get(voters.getVoter())<2)
+            if(voterCountRef.get(voters.getVoter())==1)
                 voteCount.put(voters.getCandidate(),voteCount.getOrDefault(voters.getCandidate(),0)+1);
         }
+
 
 
         List<CandidateVotes> candidateVotesList = new ArrayList<>();
@@ -71,9 +77,10 @@ public class Main
             System.out.println(candidateVotes);
         }
 
-        for(Voters voters : votersList){
 
-        }
+        List<ConstituencyResult> constituencyResultList = new ArrayList<>();
+
+
 
 
 //        System.out.println(voteCount);
