@@ -14,14 +14,14 @@ import java.util.Map;
 public class Main
 {
 
-    private InputStream getFileAsIOStream()
+    private InputStream getFileAsIOStream(String filename)
     {
         InputStream ioStream = this.getClass()
                 .getClassLoader()
-                .getResourceAsStream("votingFile.csv");
+                .getResourceAsStream(filename);
 
         if (ioStream == null) {
-            throw new IllegalArgumentException("votingFile.csv" + " is not found");
+            throw new IllegalArgumentException(filename + " is not found");
         }
         return ioStream;
     }
@@ -30,19 +30,16 @@ public class Main
 
         Main m = new Main();
 
-        InputStream csvFile = m.getFileAsIOStream();
+        InputStream csvFile = m.getFileAsIOStream("votingFile.csv");
+
+        //InputStream csvCandidateFile = m.getFileAsIOStream("candidateFile.csv");
+
 
 
         List<Voters> votersList = new CsvToBeanBuilder<Voters>(new InputStreamReader(csvFile))
                 .withType(Voters.class)
                 .build()
                 .parse();
-
-//        for(Voters voters : votersList){
-//            System.out.println(voters.getVoter());
-//        }
-
-
 
 
 
@@ -63,6 +60,7 @@ public class Main
         }
 
 
+        System.out.println(constituencyWithCandidatesData);
 
         List<CandidateVotes> candidateVotesList = new ArrayList<>();
 
@@ -76,17 +74,6 @@ public class Main
         for (CandidateVotes candidateVotes : candidateVotesList){
             System.out.println(candidateVotes);
         }
-
-
-        List<ConstituencyResult> constituencyResultList = new ArrayList<>();
-
-
-
-
-//        System.out.println(voteCount);
-//
-//        System.out.println(voterCountRef);
-
 
 
     }
