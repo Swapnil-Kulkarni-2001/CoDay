@@ -1,5 +1,6 @@
 package com.nice.avishkar;
 
+import com.nice.avishkar.entities.ConstituencyPojo;
 import com.nice.avishkar.entities.Voters;
 import com.opencsv.bean.CsvToBeanBuilder;
 import com.sun.org.apache.bcel.internal.generic.ACONST_NULL;
@@ -32,7 +33,8 @@ public class Main
 
         InputStream csvFile = m.getFileAsIOStream("votingFile.csv");
 
-        //InputStream csvCandidateFile = m.getFileAsIOStream("candidateFile.csv");
+
+        InputStream csvCandidateFile = m.getFileAsIOStream("candidateFile.csv");
 
 
 
@@ -40,6 +42,16 @@ public class Main
                 .withType(Voters.class)
                 .build()
                 .parse();
+
+
+        List<ConstituencyPojo> constituencyDataList = new CsvToBeanBuilder<ConstituencyPojo>(new InputStreamReader(csvCandidateFile))
+                .withType(ConstituencyPojo.class)
+                .build()
+                .parse();
+
+        for (ConstituencyPojo constituencyPojo : constituencyDataList){
+            System.out.println(constituencyPojo);
+        }
 
 
 
@@ -60,7 +72,6 @@ public class Main
         }
 
 
-        System.out.println(constituencyWithCandidatesData);
 
         List<CandidateVotes> candidateVotesList = new ArrayList<>();
 
@@ -74,6 +85,8 @@ public class Main
         for (CandidateVotes candidateVotes : candidateVotesList){
             System.out.println(candidateVotes);
         }
+
+
 
 
     }
